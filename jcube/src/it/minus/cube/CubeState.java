@@ -1,6 +1,6 @@
 package it.minus.cube;
 
-import java.util.Arrays;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -18,13 +18,25 @@ public class CubeState {
 			ALLOWED_COLORS.add(Character.toUpperCase(c));
 		}
 	}
+
+	
+	public CubeState(char [][][] facesMatrix) {
+		faces = new char[6][2][2];
+		for(int i = 0;i<6;i++){
+			for(int x=0;x<2;x++){
+				for(int y=0;y<2;y++){
+					faces[i][y][x]=facesMatrix[i][y][x];
+				}
+			}
+		}
+	}
 	
 	public CubeState() {
 		faces = new char[6][2][2];
 		for(int i = 0;i<6;i++){
 			for(int x=0;x<2;x++){
 				for(int y=0;y<2;y++){
-					faces[i][x][y]=COLORS[i];
+					faces[i][y][x]=COLORS[i];
 				}
 			}
 		}
@@ -35,7 +47,7 @@ public class CubeState {
 		for(int i = 0;i<6;i++){
 			for(int x=0;x<2;x++){
 				for(int y=0;y<2;y++){
-					faces[i][x][y]=source.faces[i][x][y];
+					faces[i][y][x]=source.faces[i][y][x];
 				}
 			}
 		}
@@ -50,8 +62,8 @@ public class CubeState {
 				int v = i;
 				int f = v / 4;
 				v = v % 4;
-				int x = v / 2;
-				int y = v % 2;
+				int y = v / 2;
+				int x = v % 2;
 				faces[f][x][y]=charArray[i++];
 			}
 		}
@@ -61,9 +73,9 @@ public class CubeState {
 		faces = new char[6][2][2];
 		int i =0;
 		for(int f = 0;f<6;f++){
-			for(int x=0;x<2;x++){
-				for(int y=0;y<2;y++){
-					faces[f][x][y]=arrayForm[i++];
+			for(int y=0;y<2;y++){
+				for(int x=0;x<2;x++){
+					faces[f][y][x]=arrayForm[i++];
 				}
 			}
 		}
@@ -73,9 +85,9 @@ public class CubeState {
 		char [] buffer= new char[24];
 		int i =0;
 		for(int f = 0;f<6;f++){
-			for(int x=0;x<2;x++){
-				for(int y=0;y<2;y++){
-					buffer[i++]=faces[f][x][y];
+			for(int y=0;y<2;y++){
+				for(int x=0;x<2;x++){
+					buffer[i++]=faces[f][y][x];
 				}
 			}
 		}
@@ -86,7 +98,7 @@ public class CubeState {
 		char[][]newFace=new char[2][2];
 		for(int x=0;x<2;x++){
 			for(int y=0;y<2;y++){
-				newFace[x][y]=faces[face][x][y];
+				newFace[y][x]=faces[face][y][x];
 			}
 		}
 		return newFace;
@@ -122,5 +134,8 @@ public class CubeState {
 		return true;
 	}
 	
+	protected char[][][] getFaceMatrix(){
+		return faces;
+	}
 	
 }
